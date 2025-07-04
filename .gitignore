@@ -20,22 +20,14 @@ wheels/
 .installed.cfg
 *.egg
 
-# PyInstaller
-*.manifest
-# Note: .spec files are usually tracked as they are configuration files
+# PyInstaller - exclude build directory but keep .spec files
+build/
+dist/
 
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# PyQt5/GUI related
-*.ui
-
-# Build artifacts
-*.dmg
-*.app
-*.pkg
 
 # Virtual environment
 venv/
