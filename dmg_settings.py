@@ -6,7 +6,7 @@ import os.path
 
 # Use like this: dmgbuild -s settings.py "Test Volume" test.dmg
 
-application = defines.get('app', '/Users/shoheishimizu/Python/webp-converter/dist/webp-converter.app')
+application = defines.get('app', './dist/webp-converter.app')
 appname = os.path.basename(application)
 
 def icon_from_app(app_path):

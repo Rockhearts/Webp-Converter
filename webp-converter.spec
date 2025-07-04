@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['/Users/shoheishimizu/Python/webp-converter/webp-converter.py'],
+    ['./webp-converter.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -32,7 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['/Users/shoheishimizu/Python/webp-converter/webp-app.ico'],
+    icon=['./webp-app.ico'],
 )
 coll = COLLECT(
     exe,
@@ -46,6 +46,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='webp-converter.app',
-    icon='/Users/shoheishimizu/Python/webp-converter/webp-app.ico',
+    icon='./webp-app.ico',
     bundle_identifier=None,
 )
