@@ -14,26 +14,12 @@ a = Analysis(
     hooksconfig={},
     runtime_hooks=[],
     excludes=[
-        # 完全に不要なモジュール
+        # 大型の不要なサードパーティモジュールのみ除外
         'tkinter',
         'matplotlib',
         'numpy',
         'scipy',
         'pandas',
-        'PIL._tkinter_finder',
-        'distutils',
-        'email',
-        'http',
-        'urllib',
-        'xml',
-        'json',
-        'html',
-        'encodings.idna',
-        'encodings.punycode',
-        'doctest',
-        'pydoc',
-        'unittest',
-        'test',
         
         # PyQt5の不要なモジュール（より厳密に）
         'PyQt5.QtWebEngine',
@@ -70,32 +56,51 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=None)
 
-# onefile形式を試す
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,  # onefileの場合はここに含める
-    a.datas,     # onefileの場合はここに含める
     [],
+    exclude_binaries=True,
     name='webp-converter',
     debug=False,
     bootloader_ignore_signals=False,
-    strip=True,
+    strip=False,
     upx=True,
-    upx_exclude=['vcruntime140.dll'],
-    runtime_tmpdir=None,
     console=False,
     disable_windowed_traceback=False,
-    argv_emulation=False,
+    argv_emulation=True,  # macOSで重要
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
     icon=['./webp-app.ico'],
 )
 
-app = BUNDLE(
+coll = COLLECT(
     exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='webp-converter'
+)
+
+app = BUNDLE(
+    coll,
     name='webp-converter.app',
     icon='./webp-app.ico',
-    bundle_identifier=None,
+    bundle_identifier='com.yourname.webpconverter',
+    info_plist={
+        'NSPrincipalClass': 'NSApplication',
+        'NSAppleScriptEnabled': False,
+        'NSHighResolutionCapable': True,
+        'CFBundleDocumentTypes': [
+            {
+                'CFBundleTypeName': 'Image files',
+                'CFBundleTypeRole': 'Editor',
+                'LSItemContentTypes': ['public.image'],
+                'LSHandlerRank': 'Owner'
+            }
+        ]
+    },
 )

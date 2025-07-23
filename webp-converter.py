@@ -206,7 +206,14 @@ class WebPConverterWindow(QMainWindow):
         QMessageBox.warning(self, "エラー", error_message)
 
 def main():
+    # macOSでのHigh DPI対応
+    os.environ['QT_AUTO_SCREEN_SCALE_FACTOR'] = '1'
+    
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    app.setApplicationName("WebP Converter")
+    app.setOrganizationName("YourName")
+    
     window = WebPConverterWindow()
     window.show()
     sys.exit(app.exec_())
